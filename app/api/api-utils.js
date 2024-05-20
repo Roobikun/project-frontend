@@ -111,13 +111,18 @@ export const vote = async (url, jwt, usersArray) => {
         Authorization: `Bearer ${jwt}`,
       },
       body: JSON.stringify({ users: usersArray })
-    })
+    });
+    
+    // Проверяем статус ответа
     if (response.status !== 200) {
-      throw new Error('Ошибка голосования')
+      throw new Error('Ошибка голосования');
     }
-    const result = await response.json()
-    return result
+    
+    // Обработка успешного ответа
+    const result = await response.json();
+    return result;
   } catch (error) {
-    return error
+    console.error('Произошла ошибка:', error);
+    return { error: 'Произошла ошибка при голосовании' };
   }
-}
+};
